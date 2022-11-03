@@ -1,0 +1,161 @@
+//Jon Way
+//D&D Random Character Generator
+
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class RandCharGen {
+	
+	public static void printMainMenu() {
+		System.out.println("What would you like to do?");
+		System.out.println();
+		System.out.println("1. Create new random character");
+		System.out.println("2. Exit program");
+	}
+	
+	public static void printRaceMenu() {
+		System.out.println("Pick a race from the list below.");
+		System.out.println("1. Human");
+		System.out.println("2. Elf");
+		System.out.println("3. Dwarf");
+		System.out.println("4. Random");
+	}
+	
+	public static void printClassMenu() {
+		System.out.println("Pick a class from the list below.");
+		System.out.println("1. Fighter");
+		System.out.println("2. Rogue");
+		System.out.println("3. Wizard");
+		System.out.println("4. Random");
+	}
+	
+	public static String convertRaceChoice(int raceChoice) {
+		String charRace = "N/A";
+		Random randRace = new Random();
+		
+		if (raceChoice == 4) {
+			raceChoice = randRace.nextInt(1, 4);
+		}
+		
+		switch (raceChoice) {
+		case 1:
+			charRace = "Human";
+			break;
+		case 2:
+			charRace = "Elf";
+			break;
+		case 3:
+			charRace = "Dwarf";
+			break;
+		}
+		return charRace;
+	}
+	
+	public static String convertClassChoice(int classChoice) {
+		String charClass = "N/A";
+		Random randClass = new Random();
+		
+		if (classChoice == 4) {
+			classChoice = randClass.nextInt(1, 4);
+		}
+		
+		switch (classChoice) {
+		case 1:
+			charClass = "Fighter";
+			break;
+		case 2:
+			charClass = "Rogue";
+			break;
+		case 3:
+			charClass = "Wizard";
+			break;
+		}
+		return charClass;
+	}
+	
+	public static int RandStatGen() {
+		Random rand = new Random();
+		int diceRolls[];
+		int statSum;
+		diceRolls = new int[4];
+		
+		for (int i = 0; i < diceRolls.length; i++) {
+			diceRolls[i] = rand.nextInt(1, 7);
+		}
+		
+		Arrays.sort(diceRolls);		
+		statSum = diceRolls[1] + diceRolls[2] + diceRolls[3];
+		
+		return statSum;
+	}
+	
+	public static int[] StatArrayGen() {
+		int statList[] = new int[6];
+		for (int i = 0; i < 6; i++) {
+			statList[i] = RandStatGen();
+		}
+		
+		Arrays.sort(statList);
+		return statList;
+	}
+
+	public static void main(String[] args) {
+		Scanner userInput = new Scanner(System.in);
+		int menuChoice;
+		int raceChoice;
+		String charRace;
+		int classChoice;
+		String charClass;
+		int baseStats[] = new int[6];
+		boolean runProg = true;
+		
+		System.out.println("Welcome to the D&D Random Character Generator!");
+		System.out.println();
+		printMainMenu();
+		
+		while (runProg == true) {
+			menuChoice = userInput.nextInt();
+			System.out.println();
+			
+			if (menuChoice == 1) {
+				// User chooses character race
+				printRaceMenu();
+				raceChoice = userInput.nextInt();
+				charRace = convertRaceChoice(raceChoice); // convert race to string
+				System.out.println();
+				
+				// User chooses character class
+				printClassMenu();
+				classChoice = userInput.nextInt();
+				charClass = convertClassChoice(classChoice); // convert class to string
+				System.out.println();
+				
+				// Create character
+				Character newChar = new Character();
+				baseStats = StatArrayGen(); // Roll 6 stats and sort low to high
+				newChar.sortStats(baseStats, charClass); // Assign stats based on class
+				newChar.setRace(charRace);
+				newChar.setClass(charClass);
+				newChar.raceModifier(charRace); // Change stats based on race
+				newChar.setModifier(); // Determine stat modifier
+				
+				// Print character stats
+				System.out.println();
+				newChar.printChar();
+				System.out.println();
+				
+				printMainMenu();
+			}
+			else if (menuChoice == 2) {
+				System.out.println("Exiting program...");
+				runProg = false;
+			}
+			else {
+				System.out.println("Invalid input");
+				System.out.println();
+				printMainMenu();
+			}
+		}
+	}
+}
