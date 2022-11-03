@@ -1,0 +1,180 @@
+
+public class Character {
+	private int strStat;
+	private String strMod;
+	private int dexStat;
+	private String dexMod;
+	private int conStat;
+	private String conMod;
+	private int intStat;
+	private String intMod;
+	private int wisStat;
+	private String wisMod;
+	private int chaStat;
+	private String chaMod;
+	private String race;
+	private String charClass;
+	
+	// Constructor
+	public Character() {
+		strStat = 0;
+		strMod = "0";
+		dexStat = 0;
+		dexMod = "0";
+		conStat = 0;
+		conMod = "0";
+		intStat = 0;
+		intMod = "0";
+		wisStat = 0;
+		wisMod = "0";
+		chaStat = 0;
+		chaMod = "0";
+		race = "N/A";
+		charClass = "N/A";
+	}
+	
+	// Sort randomly generated numbers into stats based on class
+	public void sortStats(int statsList[], String charClass) {
+		if (charClass == "Fighter") {
+			this.strStat = statsList[5];
+			this.dexStat = statsList[2];
+			this.conStat = statsList[4];
+			this.intStat = statsList[0];
+			this.wisStat = statsList[1];
+			this.chaStat = statsList[3];
+		}
+		else if (charClass == "Rogue") {
+			this.strStat = statsList[0];
+			this.dexStat = statsList[5];
+			this.conStat = statsList[2];
+			this.intStat = statsList[3];
+			this.wisStat = statsList[1];
+			this.chaStat = statsList[4];
+		}
+		else if (charClass == "Wizard") {
+			this.strStat = statsList[0];
+			this.dexStat = statsList[2];
+			this.conStat = statsList[4];
+			this.intStat = statsList[5];
+			this.wisStat = statsList[3];
+			this.chaStat = statsList[1];
+		}
+		else {
+			System.out.println("Unable to sort stats");
+		}
+	}
+	
+	// Used to pick correct modifier
+	public String createModifier(int stat) {
+		String statMod = "";
+		switch (stat) {
+			case 1:
+				statMod = "-5";
+				break;
+			case 2:
+			case 3:
+				statMod = "-4";
+				break;
+			case 4:
+			case 5:
+				statMod = "-3";
+				break;
+			case 6:
+			case 7:
+				statMod = "-2";
+				break;
+			case 8:
+			case 9:
+				statMod = "-1";
+				break;
+			case 10:
+			case 11:
+				statMod = "+0";
+				break;
+			case 12:
+			case 13:
+				statMod = "+1";
+				break;
+			case 14:
+			case 15:
+				statMod = "+2";
+				break;
+			case 16:
+			case 17:
+				statMod = "+3";
+				break;
+			case 18:
+			case 19:
+				statMod = "+4";
+				break;
+			case 20:
+				statMod = "+5";
+				break;
+		}
+		
+		return statMod;
+	}
+	
+	// Assign modifier to each stat
+	public void setModifier() {
+		this.strMod = createModifier(strStat);
+		this.dexMod = createModifier(dexStat);
+		this.conMod = createModifier(conStat);
+		this.intMod = createModifier(intStat);
+		this.wisMod = createModifier(wisStat);
+		this.chaMod = createModifier(chaStat);
+	}
+	
+	public void setRace(String charRace) {
+		this.race = charRace;
+	}
+	
+	public void raceModifier(String charRace) {
+		switch (charRace) {
+		case "Human":
+			this.strStat = this.strStat + 1;
+			this.dexStat = this.dexStat + 1;
+			this.conStat = this.conStat + 1;
+			this.intStat = this.intStat + 1;
+			this.wisStat = this.wisStat + 1;
+			this.chaStat = this.chaStat + 1;
+			break;
+		case "Elf":
+			this.dexStat = this.dexStat + 2;
+			break;
+		case "Dwarf":
+			this.conStat = this.conStat + 2;
+			break;
+		}
+	}
+	
+	public void setClass(String cClass) {
+		this.charClass = cClass;
+	}
+	
+	public void statTable() {
+		String leftFormat = "| %-3s |  %2d  |  %-2s  |\n";
+		System.out.println("+-----+------+------+");
+		System.out.format(leftFormat, "STR", strStat, strMod);
+		System.out.println("|-----|------|------|");
+		System.out.format(leftFormat, "DEX", dexStat, dexMod);
+		System.out.println("|-----|------|------|");
+		System.out.format(leftFormat, "CON", conStat, conMod);
+		System.out.println("|-----|------|------|");
+		System.out.format(leftFormat, "INT", intStat, intMod);
+		System.out.println("|-----|------|------|");
+		System.out.format(leftFormat, "WIS", wisStat, wisMod);
+		System.out.println("|-----|------|------|");
+		System.out.format(leftFormat, "CHA", chaStat, chaMod);
+		System.out.println("+-----+------+------+");
+		
+	}
+	
+	// Output character stats
+	public void printChar() {
+		System.out.println(race + " " + charClass);
+		System.out.println();
+		statTable();		
+	}
+	
+}
