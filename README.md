@@ -1,4 +1,4 @@
-# DnDCharPrototype
+# DnD Character Generator Prototype
 
 For a coding exercise, I wanted to make a random character generator for Dungeons and Dragons.
 As a dungeon master, I frequently need multiple characters to run the campaign.
